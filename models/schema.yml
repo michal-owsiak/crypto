@@ -7,3 +7,8 @@ models:
         tests:
           - not_null
           - unique
+
+  - name: stg_btc_outputs
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: "{{ ref('stg_btc_outputs_py') }}"
