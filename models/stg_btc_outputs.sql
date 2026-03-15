@@ -20,7 +20,7 @@ with flattened_outputs as (
     {% if is_incremental() %}
 
     and stg.block_timestamp >= (
-        select max(stg.block_timestamp)
+        select max(block_timestamp)
         from {{ this }}
     )
 
