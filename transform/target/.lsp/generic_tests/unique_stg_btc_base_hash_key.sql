@@ -1,0 +1,1 @@
+{{ test_unique(column_name="hash_key", model=get_where_subquery(ref('stg_btc_base'))) }}
