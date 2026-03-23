@@ -1,5 +1,15 @@
+# macOS
+.DS_Store
 
-target/
-dbt_packages/
-logs/
-dbt_internal_packages/
+# Python
+__pycache__/
+*.pyc
+
+# dbt
+transform/target/
+transform/dbt_packages/
+transform/logs/
+transform/dbt_internal_packages/
+
+# env
+.env
