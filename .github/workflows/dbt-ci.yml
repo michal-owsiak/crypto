@@ -24,7 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install dbt-core==1.9.4 dbt-snowflake==1.9.4
 
-
       - name: Set up dbt profile and private key
         run: |
           mkdir -p ~/.dbt
@@ -35,13 +34,14 @@ jobs:
           DBT_PROFILES_YML: ${{ secrets.DBT_PROFILES_YML }}
           DBT_PRIVATE_KEY: ${{ secrets.DBT_PRIVATE_KEY }}
 
-
-
       - name: Install dbt deps
+        working-directory: ./transform
         run: dbt deps
 
       - name: Run dbt debug
+        working-directory: ./transform
         run: dbt debug
 
       - name: Run dbt
+        working-directory: ./transform
         run: dbt run
