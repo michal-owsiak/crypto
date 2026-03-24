@@ -2,7 +2,7 @@ version: 2
 
 models:
 
-  - name: stg_btc_base
+  - name: stg_btc_transactions
     columns:
       - name: hash_key
         tests:
@@ -10,7 +10,7 @@ models:
           - unique
 
 
-  - name: btc_whale_alert
+  - name: mart_btc_whale_alert
     latest_version: 2
     config:
       contract:
