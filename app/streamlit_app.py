@@ -8,6 +8,11 @@ st.set_page_config(page_title='Bitcoin Investing Tool', layout='wide')
 st.markdown(
     '''
     <style>
+
+    .block-container {
+        padding-top: 3rem !important;
+    }
+    
     section[data-testid='stSidebar'] {
         width: 200px !important;
     }
@@ -16,8 +21,8 @@ st.markdown(
         width: 200px !important;
         display: flex;
         flex-direction: column;
-        justify-content: center;   /* pion */
-        align-items: center;       /* poziom */
+        justify-content: center;
+        align-items: center;
         height: 100vh;
     }
 
