@@ -1,5 +1,4 @@
-requests
-pandas
-snowflake-connector-python[pandas]
-python-dotenv
-pathlib
+requests>=2.31
+pandas>=2.0
+snowflake-connector-python[pandas]>=3.12
+python-dotenv>=1.0

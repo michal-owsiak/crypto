@@ -10,6 +10,7 @@ transform/target/
 transform/dbt_packages/
 transform/logs/
 transform/dbt_internal_packages/
+logs/
 
 # env
 .env
