@@ -27,21 +27,20 @@ def get_connection():
 
     private_key_pem = get_secret("SNOWFLAKE_PRIVATE_KEY").strip()
 
-    if "\\n" in private_key_pem:
-        private_key_pem = private_key_pem.replace("\\n", "\n")
-
-    private_key_pem = private_key_pem.strip().encode("utf-8")
-
     lines = private_key_pem.splitlines()
 
     st.write({
+        "type": str(type(private_key_pem)),
         "line_count": len(lines),
         "first_line": lines[0] if lines else None,
         "last_line": lines[-1] if lines else None,
         "contains_backslash_n": "\\n" in private_key_pem,
     })
 
-    st.stop()
+    if "\\n" in private_key_pem:
+        private_key_pem = private_key_pem.replace("\\n", "\n")
+
+    private_key_pem = private_key_pem.strip().encode("utf-8")
 
     p_key = serialization.load_pem_private_key(
         private_key_pem,
