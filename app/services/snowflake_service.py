@@ -24,27 +24,18 @@ def get_secret(name, default=None):
 
 
 def get_connection():
-
     private_key_pem = get_secret("SNOWFLAKE_PRIVATE_KEY").strip()
-
-    lines = private_key_pem.splitlines()
-
-    st.write({
-        "type": str(type(private_key_pem)),
-        "line_count": len(lines),
-        "first_line": lines[0] if lines else None,
-        "last_line": lines[-1] if lines else None,
-        "contains_backslash_n": "\\n" in private_key_pem,
-    })
 
     if "\\n" in private_key_pem:
         private_key_pem = private_key_pem.replace("\\n", "\n")
 
-    private_key_pem = private_key_pem.strip().encode("utf-8")
+    private_key_pem = private_key_pem.replace("\r\n", "\n").replace("\r", "\n")
+
+    st.write(private_key_pem.splitlines())
 
     p_key = serialization.load_pem_private_key(
-        private_key_pem,
-        password=None
+        private_key_pem.encode("utf-8"),
+        password=None,
     )
 
     pkb = p_key.private_bytes(
@@ -54,13 +45,13 @@ def get_connection():
     )
 
     return snowflake.connector.connect(
-        user=get_secret('SNOWFLAKE_USER'),
-        account=get_secret('SNOWFLAKE_ACCOUNT'),
+        user=get_secret("SNOWFLAKE_USER"),
+        account=get_secret("SNOWFLAKE_ACCOUNT"),
         private_key=pkb,
-        warehouse=get_secret('SNOWFLAKE_WAREHOUSE'),
-        database=get_secret('SNOWFLAKE_DATABASE'),
-        schema=get_secret('SNOWFLAKE_DBT_SCHEMA'),
-        role=get_secret('SNOWFLAKE_ROLE', None),
+        warehouse=get_secret("SNOWFLAKE_WAREHOUSE"),
+        database=get_secret("SNOWFLAKE_DATABASE"),
+        schema=get_secret("SNOWFLAKE_DBT_SCHEMA"),
+        role=get_secret("SNOWFLAKE_ROLE", None),
     )
 
 
