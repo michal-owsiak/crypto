@@ -1,5 +1,0 @@
-requests
-pandas
-snowflake-connector-python[pandas]
-python-dotenv
-pathlib

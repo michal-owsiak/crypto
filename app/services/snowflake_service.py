@@ -1,39 +1,10 @@
 import os
 import pandas as pd
-import snowflake.connector
+import sys
 from pathlib import Path
-from dotenv import load_dotenv
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
 
-
-env_path = Path(__file__).resolve().parents[1] / '.env'
-load_dotenv(dotenv_path=env_path)
-
-
-def get_connection():
-    with open(os.environ['SNOWFLAKE_PRIVATE_KEY_PATH'], 'rb') as key_file:
-        p_key = serialization.load_pem_private_key(
-            key_file.read(),
-            password=None,
-            backend=default_backend()
-        )
-
-    pkb = p_key.private_bytes(
-        encoding=serialization.Encoding.DER,
-        format=serialization.PrivateFormat.PKCS8,
-        encryption_algorithm=serialization.NoEncryption()
-    )
-
-    return snowflake.connector.connect(
-        user=os.environ['SNOWFLAKE_USER'],
-        account=os.environ['SNOWFLAKE_ACCOUNT'],
-        private_key=pkb,
-        warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
-        database=os.environ['SNOWFLAKE_DATABASE'],
-        schema=os.environ['SNOWFLAKE_DBT_SCHEMA'],
-        role=os.environ.get('SNOWFLAKE_ROLE'),
-    )
+sys.path.append(str(Path(__file__).resolve().parents[2]))
+from shared.snowflake_client import get_connection
 
 
 def read_price_supertrend(interval: str = '1w', limit: int = 3500) -> pd.DataFrame:

@@ -1,8 +1,8 @@
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
-from client_binance import fetch_klines
-from client_snowflake import get_connection, get_max_open_time, load_to_snowflake
+from binance_client import fetch_klines
+from snowflake_service import get_connection, get_max_open_time, load_to_snowflake
 
 
 env_path = Path(__file__).resolve().parents[1] / '.env'

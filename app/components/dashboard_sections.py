@@ -50,15 +50,15 @@ def render_market_summary(summary):
                 ret_color = '#23a88e' if ret >= 0 else '#f14c4a'
 
                 st.markdown(f'''
-                <div style='font-size:12px'>Return</div>
+                <div style='font-size:12px'>Change</div>
                 <div style='font-size:20px; font-weight:600; color:{ret_color};'>
                     {ret:.2f}%
                 </div>
                 ''', unsafe_allow_html=True)
             else:
-                st.write('Return: N/A')
+                st.write('Change: N/A')
         else:
-            st.metric('Return', 'N/A')
+            st.metric('Change', 'N/A')
         
         st.write('')
         st.markdown(f'''
