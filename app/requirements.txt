@@ -1,5 +1,5 @@
 streamlit==1.40.0
-plotly==5.22.0
+plotly==6.6.0
 pandas==2.2.3
 snowflake-connector-python[pandas]==3.12.4
 pyOpenSSL>=24,<25
