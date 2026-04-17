@@ -27,7 +27,12 @@ def get_secret(name, default=None):
     return value
 
 
-def _normalize_private_key_pem(private_key_value: str) -> bytes:
+def _pem_to_der_bytes(private_key_value: str) -> bytes:
+    if not isinstance(private_key_value, str):
+        raise TypeError(
+            f"SNOWFLAKE_PRIVATE_KEY must be a string, got {type(private_key_value).__name__}"
+        )
+
     private_key_pem = private_key_value.strip()
 
     if private_key_pem.startswith('"') and private_key_pem.endswith('"'):
@@ -54,10 +59,7 @@ def _get_private_key_bytes():
     private_key_path = os.getenv("SNOWFLAKE_PRIVATE_KEY_PATH")
     if private_key_path and Path(private_key_path).exists():
         with open(private_key_path, "rb") as f:
-            p_key = serialization.load_pem_private_key(
-                f.read(),
-                password=None,
-            )
+            p_key = serialization.load_pem_private_key(f.read(), password=None)
         return p_key.private_bytes(
             encoding=serialization.Encoding.DER,
             format=serialization.PrivateFormat.PKCS8,
@@ -66,20 +68,22 @@ def _get_private_key_bytes():
 
     private_key_value = get_secret("SNOWFLAKE_PRIVATE_KEY")
 
-    possible_path = Path(private_key_value)
-    if possible_path.exists() and possible_path.is_file():
-        with open(possible_path, "rb") as f:
-            p_key = serialization.load_pem_private_key(
-                f.read(),
-                password=None,
+    if isinstance(private_key_value, str):
+        possible_path = Path(private_key_value)
+        if possible_path.exists() and possible_path.is_file():
+            with open(possible_path, "rb") as f:
+                p_key = serialization.load_pem_private_key(f.read(), password=None)
+            return p_key.private_bytes(
+                encoding=serialization.Encoding.DER,
+                format=serialization.PrivateFormat.PKCS8,
+                encryption_algorithm=serialization.NoEncryption(),
             )
-        return p_key.private_bytes(
-            encoding=serialization.Encoding.DER,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption(),
-        )
 
-    return _normalize_private_key_pem(private_key_value)
+        return _pem_to_der_bytes(private_key_value)
+
+    raise TypeError(
+        "SNOWFLAKE_PRIVATE_KEY must be either a file path string or a PEM string."
+    )
 
 
 def get_connection():
