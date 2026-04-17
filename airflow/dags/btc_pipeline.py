@@ -39,7 +39,7 @@ def btc_pipeline():
                 cur.execute(f'use database {database}')
                 cur.execute(f'use schema {schema}')
                 cur.execute(query)
-                print(f'Executed Snowflake task "{task_name}"')
+                print(f'Executed Snowflake task '{task_name}'')
         finally:
             cur.close()
             conn.close()
@@ -53,36 +53,43 @@ def btc_pipeline():
         run_ingestion()
         print(f'Completed Binance OHLC ingestion')
 
+    AIRFLOW_ROOT = Path('/opt/airflow')
+    DBT_DIR = AIRFLOW_ROOT / 'dbt'
+
     @task(
         retries=3,
         retry_delay=timedelta(minutes=2),
-        retry_exponential_backoff=True
+        retry_exponential_backoff=True,
     )
     def run_dbt():
+        print(f'DBT_DIR={DBT_DIR}')
+        print(f'DBT_DIR exists={DBT_DIR.exists()}')
+        print(f'dbt_project exists={(DBT_DIR / 'dbt_project.yml').exists()}')
+        print(f'profiles exists={(DBT_DIR / 'profiles.yml').exists()}')
+
         result = subprocess.run(
             [
-                "/home/airflow/.local/bin/dbt",
-                "run",
-                "--project-dir", str(project_root / "dbt"),
-                "--profiles-dir", str(project_root / "dbt"),
+                '/home/airflow/.local/bin/dbt',
+                'run',
+                '--project-dir', str(DBT_DIR),
+                '--profiles-dir', str(DBT_DIR),
             ],
-            cwd=str(project_root / "dbt"),
+            cwd=str(DBT_DIR),
             capture_output=True,
             text=True,
         )
 
-        print("DBT RETURN CODE")
+        print('DBT RETURN CODE')
         print(result.returncode)
-        print("DBT STDOUT")
+        print('DBT STDOUT')
         print(result.stdout)
-        print("DBT STDERR")
+        print('DBT STDERR')
         print(result.stderr)
 
         if result.returncode != 0:
             raise Exception(
-                f"DBT FAILED:\nreturn code={result.returncode}\nstdout={result.stdout}\nstderr={result.stderr}"
-            )
-
+                f'DBT FAILED:\nreturn code={result.returncode}\nstdout={result.stdout}\nstderr={result.stderr}'
+        )
 
     run_snowflake_task() >> run_binance_ingestion() >> run_dbt()
 
