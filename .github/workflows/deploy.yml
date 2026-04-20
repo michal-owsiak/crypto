@@ -1,4 +1,4 @@
-name: Hetzner VPS deployment CI
+name: Hetzner VPS deployment CD
 
 on:
   push:
@@ -17,4 +17,6 @@ jobs:
           username: ${{ secrets.HETZNER_USER }}
           key: ${{ secrets.HETZNER_SSH_KEY }}
           script: |
-            bash /root/bitcoin-investing-tool/deploy.sh
+            set -e
+            test -f /home/source/bitcoin-investing-tool/deploy.sh
+            bash /home/source/bitcoin-investing-tool/deploy.sh
