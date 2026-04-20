@@ -1,13 +1,6 @@
 ## **Bitcoin Investing Tool**
 
-This repository presents a data engineering project implementing an
-end-to-end ELT pipeline combined with an analytical application designed
-to support long-term Bitcoin investing.
-
-The system integrates multiple data sources, processes them using modern
-data engineering tools, and delivers insights through an interactive
-Streamlit application. The project demonstrates a complete workflow
-including data ingestion, transformation, orchestration, and deployment.
+An end-to-end data engineering project and analytical application designed to support long-term Bitcoin investing.
 
 ------------------------------------------------------------------------
 
@@ -39,28 +32,28 @@ reloads.
 
 ![Application](https://i.postimg.cc/BQxcZNVN/screenshot.jpg)
 
-### **Key components**
+### **Key Components**
 
-- **Bitcoin price chart (weekly interval)**
+- **Bitcoin Price Chart (Weekly Interval)**
   - Main analytical view focused on long-term trends
   - Weekly granularity is used to reduce noise and support strategic decision-making
   - Daily interval is available for deeper analysis when needed
 
-- **Supertrend indicator**
+- **Supertrend Indicator**
   - Primary analytical tool used in the application
   - Helps identify long-term trend direction and potential reversal points
   - Has proven effective in capturing major market cycles
 
-- **Market summary**
+- **Market Summary**
   - Aggregated view of market metrics
   - Provides quick situational awareness for the current market state
 
-- **Whale inflow monitoring**
+- **Whale Inflow Monitoring**
   - Tracks large-volume movements on the blockchain
   - Based on on-chain data
-  - Updated hourly to detect potential accumulation or distribution phases
+  - Updated hourly to help detect potential accumulation or distribution phases
 
-### **Design assumptions**
+### **Design Assumptions**
 
 The application is optimized for long-term investing:
 
@@ -70,9 +63,11 @@ The application is optimized for long-term investing:
   - market data (daily)
   - blockchain data (hourly)
 
-## **Tools used**
+This design ensures that the data pipeline directly supports the analytical goals of the application.
 
-**Languages, frameworks and environments:**
+## **Tech Stack**
+
+**Languages, Frameworks and Environments:**
 
     > Python
     > SQL
@@ -80,13 +75,13 @@ The application is optimized for long-term investing:
     > Streamlit
     > GitHub Actions
 
-**Data engineering and orchestration:**
+**Data Engineering and Orchestration:**
 
     > Apache Airflow
     > dbt
     > Snowflake
 
-**Libraries and packages:**
+**Libraries and Packages:**
 
     > pandas
     > numpy
@@ -99,7 +94,7 @@ The application is optimized for long-term investing:
     > Grafana
     
 
-## **Getting started**
+## **Getting Started**
 
 ``` bash
 git clone https://github.com/your-username/bitcoin-investing-tool
