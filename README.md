@@ -58,7 +58,7 @@ reloads.
 The application is optimized for long-term investing:
 
 - Focus on higher timeframes (weekly data)
-- Limited need for high-frequency ingestion (daily batches)
+- Limited need for high-frequency ingestion (daily batches are sufficient)
 - Separation of data sources:
   - market data (daily)
   - blockchain data (hourly)
