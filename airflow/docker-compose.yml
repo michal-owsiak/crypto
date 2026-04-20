@@ -34,7 +34,7 @@ services:
       - ../ingestion:/opt/airflow/ingestion
       - ../dbt:/opt/airflow/dbt
       - ../keys:/opt/airflow/keys
-      - ./logs:/opt/airflow/logs
+      - ./airflow_logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ~/.dbt:/home/airflow/.dbt
     command: ["bash", "-c", "airflow db migrate"]
@@ -64,7 +64,7 @@ services:
       - ../ingestion:/opt/airflow/ingestion
       - ../dbt:/opt/airflow/dbt
       - ../keys:/opt/airflow/keys
-      - ./logs:/opt/airflow/logs
+      - ./airflow_logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ~/.dbt:/home/airflow/.dbt
     ports:
@@ -96,7 +96,7 @@ services:
       - ../ingestion:/opt/airflow/ingestion
       - ../dbt:/opt/airflow/dbt
       - ../keys:/opt/airflow/keys
-      - ./logs:/opt/airflow/logs
+      - ./airflow_logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ~/.dbt:/home/airflow/.dbt
     command: scheduler
@@ -126,7 +126,7 @@ services:
       - ../ingestion:/opt/airflow/ingestion
       - ../dbt:/opt/airflow/dbt
       - ../keys:/opt/airflow/keys
-      - ./logs:/opt/airflow/logs
+      - ./airflow_logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ~/.dbt:/home/airflow/.dbt
     command: dag-processor
