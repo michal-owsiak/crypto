@@ -2,6 +2,8 @@
 
 An end-to-end data engineering project and analytical application designed to support long-term Bitcoin investing.
 
+https://bitcoin-investing-tool.streamlit.app
+
 ------------------------------------------------------------------------
 
 ## **Architecture**
@@ -58,7 +60,7 @@ reloads.
 The application is optimized for long-term investing:
 
 - Focus on higher timeframes (weekly data)
-- Limited need for high-frequency ingestion (daily batches)
+- Limited need for high-frequency ingestion (daily batches are sufficient)
 - Separation of data sources:
   - market data (daily)
   - blockchain data (hourly)
@@ -88,7 +90,7 @@ This design ensures that the data pipeline directly supports the analytical goal
     > plotly
     > snowflake-connector-python
 
-**Monitoring:**
+**Monitoring (not included in the architecture graph):**
 
     > Prometheus
     > Grafana
