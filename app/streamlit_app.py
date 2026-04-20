@@ -49,7 +49,7 @@ with col_2:
     st.write('')
 
 with col_3:
-    st.subheader('BTC Whale Inflow Monitor (24h)')
+    st.subheader('BTC Whale Inflow Monitor (updates hourly)')
 
     st.metric('Whale addresses (>10 BTC inflow)', len(whales_df))
     st.metric('Total BTC inflow', f'{whales_df['total_output_value'].sum():,.2f}')
