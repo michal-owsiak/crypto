@@ -62,26 +62,6 @@ def btc_pipeline():
         retry_exponential_backoff=True,
     )
     def run_dbt():
-        deps = subprocess.run(
-            [
-                '/home/airflow/.local/bin/dbt',
-                'deps',
-                '--project-dir', str(DBT_DIR),
-                '--profiles-dir', str(DBT_DIR),
-            ],
-            cwd=str(DBT_DIR),
-            capture_output=True,
-            text=True,
-        )
-
-        print(f'DBT DEPS RETURN CODE: {deps.returncode}')
-        print(deps.stdout)
-
-        if deps.returncode != 0:
-            raise Exception(
-                f'DBT DEPS FAILED:\nreturn code={deps.returncode}\nstdout={deps.stdout}\nstderr={deps.stderr}'
-            )
-
         result = subprocess.run(
             [
                 '/home/airflow/.local/bin/dbt',
