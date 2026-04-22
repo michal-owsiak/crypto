@@ -36,7 +36,7 @@ reloads.
 
 ### **Key Components**
 
-- **Bitcoin Price Chart (Weekly Interval)**
+- **Bitcoin Price Chart (Weekly and Daily Timeframes)**
   - Main analytical view focused on long-term trends
   - Weekly granularity is used to reduce noise and support strategic decision-making
   - Daily interval is available for deeper analysis when needed
