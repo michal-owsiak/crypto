@@ -115,9 +115,9 @@ Below is a simplified overview of the project structure to help navigate the cod
 bitcoin-investing-tool/
 │
 ├── airflow/                   # Workflow orchestration (Apache Airflow)
-│   ├── dags/                    # DAG definitions
-│   ├── Dockerfile               # Airflow container setup
-│   └── docker-compose.yml       # Local orchestration environment
+│   ├── dags/                  # DAG definitions
+│   ├── Dockerfile             # Airflow container setup
+│   └── docker-compose.yml     # Local orchestration environment
 │
 ├── ingestion/                 # Market data ingestion (Binance API)
 │   ├── binance_client.py        # API client for fetching market data from Binance
@@ -127,13 +127,13 @@ bitcoin-investing-tool/
 ├── dbt/                       # Data transformation layer (ELT)
 │   ├── models/
 │   │   ├── stg/                   # Raw data cleaning and normalization
-│   │   |   ├── blockchain/          # On-chain data transformations
-|   |   |   └── market/              # Market data (Binance) transformations
+│   │   │   ├── blockchain/          # On-chain data transformations
+│   │   │   └── market/              # Market data (Binance) transformations
 │   │   ├── int/                   # Reusable intermediate transformations
-|   |   |   └── market/        
+│   │   │   └── market/
 │   │   └── marts/                 # Final analytical data layer
-│   │   |   ├── blockchain/    
-|   |   |   └── market/        
+│   │       ├── blockchain/
+│   │       └── market/
 │   ├── macros/                  # Reusable SQL logic
 │   ├── seeds/                   # Static data loaded into warehouse
 │   └── tests/                   # Data quality checks
