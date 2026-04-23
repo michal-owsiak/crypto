@@ -60,7 +60,7 @@ def btc_pipeline():
         retry_delay=timedelta(minutes=2),
         retry_exponential_backoff=True,
     )
-    def run_dbt():
+    def dbt_run():
         result = subprocess.run(
             [
                 '/home/airflow/.local/bin/dbt',
@@ -78,7 +78,34 @@ def btc_pipeline():
 
         if result.returncode != 0:
             raise Exception(
-                f'DBT FAILED:\nreturn code={result.returncode}\nstdout={result.stdout}\nstderr={result.stderr}'
+                f'DBT RUN FAILED:\nreturn code={result.returncode}\nstdout={result.stdout}\nstderr={result.stderr}'
+            )
+        
+    
+    @task(
+        retries=3,
+        retry_delay=timedelta(minutes=2),
+        retry_exponential_backoff=True,
+    )
+    def dbt_test():
+        result = subprocess.run(
+            [
+                '/home/airflow/.local/bin/dbt',
+                'test',
+                '--project-dir', str(DBT_DIR),
+                '--profiles-dir', str(DBT_DIR),
+            ],
+            cwd=str(DBT_DIR),
+            capture_output=True,
+            text=True,
+        )
+
+        print(f'DBT TEST RETURN CODE: {result.returncode}')
+        print(result.stdout)
+
+        if result.returncode != 0:
+            raise Exception(
+                f'DBT TEST FAILED:\nreturn code={result.returncode}\nstdout={result.stdout}\nstderr={result.stderr}'
             )
 
 
@@ -96,7 +123,14 @@ def btc_pipeline():
             raise Exception(f'Failed to ping Streamlit app: {response.status_code}')
         
 
-    run_snowflake_task() >> run_binance_ingestion() >> run_dbt() >> ping_streamlit()
+    blockchain_ingestion = run_snowflake_task()
+    binance_ingestion = run_binance_ingestion()
+    dbt_run_task = dbt_run()
+    dbt_test_task = dbt_test()
+    streamlit = ping_streamlit()
+
+
+    blockchain_ingestion >> binance_ingestion >> dbt_run_task >> dbt_test_task >> streamlit
 
 
 btc_pipeline()
